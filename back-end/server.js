@@ -32,9 +32,15 @@ const Collection = mongoose.model('Collection', collectionSchema);
 app.post('/api/imagelib', async (req, res) => {
   console.log("Saving " + req.body.fileName);
   var fullPath = "/images" + req.body.filePath;
-  await fs.mkdirSync(fullPath, { recursive: true }, (err) => { if (err) console.log(err); });
-  await fs.writeFileSync(fullPath + req.body.fileName, req.body.fileData, {encoding: 'base64'}, function (err) {
-    console.log(err);
+  try {
+    await fs.mkdirSync(fullPath, { recursive: true }, (err) => { if (err) console.log(err); });
+    await fs.writeFileSync(fullPath + req.body.fileName, req.body.fileData, {encoding: 'base64'}, function (err) {
+      console.log(err);
+    }
+  }
+  catch (error) {
+    console.log(error);
+  }
   });
 });
 

@@ -58,7 +58,6 @@ export default {
       this.getCollection();
     },
     async removeImage(imageId) {
-      console.log("in remove");
       try {
         await axios.delete('/api/pixdesign/' + this.id + '/'+ imageId);
       }
@@ -77,7 +76,6 @@ export default {
       this.getCollection();
     },
     async deleteCollection() {
-      console.log(this.images.length);
       if (this.images.length > 0) {
         for (let image of this.images) {
           try {

@@ -31,21 +31,21 @@ const Collection = mongoose.model('Collection', collectionSchema);
 
 app.post('/api/imagelib', async (req, res) => {
   console.log("Saving " + req.body.fileName);
-  var fullPath = "/images" + req.body.filePath;
+  var fullPath = "/var/www/proj4.breedcs260.com/images" + req.body.filePath;
   try {
     await fs.mkdirSync(fullPath, { recursive: true }, (err) => { if (err) console.log(err); });
     await fs.writeFileSync(fullPath + req.body.fileName, req.body.fileData, {encoding: 'base64'}, function (err) {
       console.log(err);
-    }
+    });
+    res.sendStatus(200);
   }
   catch (error) {
     console.log(error);
   }
-  });
 });
 
 app.delete('/api/imagelib/images/:creator/:collection/:fileName', async (req, res) => {
-  var fullPath = "/images/" + req.params.creator + '/' + req.params.collection + '/' + req.params.fileName;;
+  var fullPath = "/var/www/proj4.breedcs260.com/images/" + req.params.creator + '/' + req.params.collection + '/' + req.params.fileName;;
   console.log(fullPath);
   try {
     await fs.unlinkSync(fullPath);
@@ -79,6 +79,7 @@ app.post('/api/pixdesign', async (req, res) => {
     collection.images.push(image);
     console.log("Added " + image.name + " to " + collection.name);
     collection.save();
+    res.sendStatus(200);
   }
   catch (error) {
     console.log(error);

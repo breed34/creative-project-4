@@ -31,7 +31,7 @@ const Collection = mongoose.model('Collection', collectionSchema);
 
 app.post('/api/imagelib', async (req, res) => {
   console.log("Saving " + req.body.fileName);
-  var fullPath = "../front-end/public/images" + req.body.filePath;
+  var fullPath = "/images" + req.body.filePath;
   await fs.mkdirSync(fullPath, { recursive: true }, (err) => { if (err) console.log(err); });
   await fs.writeFileSync(fullPath + req.body.fileName, req.body.fileData, {encoding: 'base64'}, function (err) {
     console.log(err);
@@ -39,7 +39,7 @@ app.post('/api/imagelib', async (req, res) => {
 });
 
 app.delete('/api/imagelib/images/:creator/:collection/:fileName', async (req, res) => {
-  var fullPath = "../front-end/public/images/" + req.params.creator + '/' + req.params.collection + '/' + req.params.fileName;;
+  var fullPath = "/images/" + req.params.creator + '/' + req.params.collection + '/' + req.params.fileName;;
   console.log(fullPath);
   try {
     await fs.unlinkSync(fullPath);
